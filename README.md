@@ -26,3 +26,66 @@ To us, diversity and inclusion are business imperatives, not just nice-to-haves.
 
 1. Define relevant KPIs in hiring, promotion, performance and turnover, and create a visualisation
 2. Write what you think some root causes of their slow progress might be
+
+# DAX commands used:
+Total Women Promoted _2021 = 
+VAR WomenPromoted = 
+    CALCULATE(
+        COUNT('Pharma Group AG'[Employee ID]),
+        'Pharma Group AG'[Promotion in FY21?] = "Yes",
+        'Pharma Group AG'[Gender] = "Female"
+    )
+VAR TotalWomen = 
+    CALCULATE(
+        COUNT('Pharma Group AG'[Employee ID]),
+        'Pharma Group AG'[Gender] = "Female"
+    )
+RETURN 
+    DIVIDE(WomenPromoted, TotalWomen, 0)
+
+Count of Leavers = 
+CALCULATE(
+    COUNT('Pharma Group AG'[Employee ID]),
+    'Pharma Group AG'[FY20 leaver?] = "Yes"
+)
+
+% Turnover = 
+VAR TotalEmployees = COUNT('Pharma Group AG'[Employee ID])
+VAR Leavers = 
+    CALCULATE(
+        COUNT('Pharma Group AG'[Employee ID]),
+        'Pharma Group AG'[FY20 leaver?] = "Yes"
+    )
+RETURN 
+    DIVIDE(Leavers, TotalEmployees, 0)
+
+Avg Performance Rating Men in FY19 = 
+CALCULATE(
+    AVERAGE('Pharma Group AG'[FY19 Performance Rating]),
+    'Pharma Group AG'[Gender] = "Male"
+)
+
+Percentage of Hires Women = 
+VAR HiredWomen = 
+    CALCULATE(
+        COUNT('Pharma Group AG'[Employee ID]),
+        'Pharma Group AG'[New hire FY20?] = "Yes",
+        'Pharma Group AG'[Gender] = "Female"
+    )
+VAR TotalHires = 
+    CALCULATE(
+        COUNT('Pharma Group AG'[Employee ID]),
+        'Pharma Group AG'[New hire FY20?] = "Yes"
+    )
+RETURN 
+    DIVIDE(HiredWomen, TotalHires, 0)
+
+Percentage of Turnover = 
+VAR TotalEmployees = COUNT('Pharma Group AG'[Employee ID])
+VAR Leavers = 
+    CALCULATE(
+        COUNT('Pharma Group AG'[Employee ID]),
+        'Pharma Group AG'[FY20 leaver?] = "Yes"
+    )
+RETURN 
+    DIVIDE(Leavers, TotalEmployees, 0)
